@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Family Expenses Pie Charts with Labels and Values</title>
+    <style>
+        /* Add a linear gradient background */
+        body {
+            background: linear-gradient(135deg, #f6d365, #fda085);
+            font-family: Arial, sans-serif;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 2rem;
+            color: #fff;
+            margin-top: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Style the container for each family */
+        .chart-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            width: 100%;
+            max-width: 1200px;
+            margin-top: 30px;
+        }
+
+        .chart-container > div {
+            background: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            margin: 20px;
+            width: 320px;
+            text-align: center;
+        }
+
+        .family-label {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: #fda085;
+        }
+
+        /* Adjust the canvas to fit within the container */
+        canvas {
+            margin: 20px 0;
+            border: 1px solid #ddd;
+            background-color: #fafafa;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+        }
+
+        /* Style the expense lists */
+        .expenses-container {
+            margin-top: 10px;
+        }
+
+        .expenses-list {
+            list-style: none;
+            padding: 0;
+            text-align: left;
+            margin: 0 auto;
+            max-width: 220px;
+        }
+
+        .expenses-list li {
+            margin: 5px 0;
+            font-size: 14px;
+            padding: 5px;
+            background: #f6d365;
+            border-radius: 4px;
+            color: #fff;
+            text-align: center;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Style for the total expenses section */
+        .total-expenses {
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: #fda085;
+            margin-top: 15px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Family Expenses Comparison</h2>
+    <div class="chart-container">
+        <div>
+            <h3 class="family-label">Rich Family</h3>
+            <canvas id="richFamilyChart" width="300" height="300"></canvas>
+            <div class="expenses-container">
+                <ul id="richFamilyExpenses" class="expenses-list"></ul>
+                <div id="richFamilyTotal" class="total-expenses"></div>
+            </div>
+        </div>
+        <div>
+            <h3 class="family-label">Middle-Class Family</h3>
+            <canvas id="middleClassFamilyChart" width="300" height="300"></canvas>
+            <div class="expenses-container">
+                <ul id="middleClassFamilyExpenses" class="expenses-list"></ul>
+                <div id="middleClassFamilyTotal" class="total-expenses"></div>
+            </div>
+        </div>
+        <div>
+            <h3 class="family-label">Poor Family</h3>
+            <canvas id="poorFamilyChart" width="300" height="300"></canvas>
+            <div class="expenses-container">
+                <ul id="poorFamilyExpenses" class="expenses-list"></ul>
+                <div id="poorFamilyTotal" class="total-expenses"></div>
+            </div>
+        </div>
+    </div>
+<script src="general expensives .js"></script>
+    
+</body>
+</html>

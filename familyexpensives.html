@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="familyexpensives.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>  
+</head>
+<body>
+    <div class="container">
+        <h2>Enter Family Expenses</h2>
+        <div id="step1">
+            <label for="fatherSalary">Enter Father’s Salary:</label>
+            <input type="number" id="fatherSalary" placeholder="Father's Salary">
+            <button onclick="nextStep(1)">Next</button>
+        </div>
+        <div id="step2" class="hidden">
+            <label for="fatherExpenses">Enter Father’s Expenses:</label>
+            <input type="number" id="fatherExpenses" placeholder="Father's Expenses">
+
+            <label for="Travelling expenses">Travelling expenses:</label>
+        <input type="number" id="travelling" placeholder="Enter your travelling expenses"><br>
+
+        <label for="Rent/housing">Rent/housing:</label>
+        <input type="number" id="rent" placeholder="Enter your rent or housing costs"><br>
+
+
+            <button onclick="nextStep(2)">Next</button>
+        </div>
+        <div id="step3" class="hidden">
+            <label for="moTherExpenses">Enter Mother’s Expenses:</label>
+            <input type="number" id="moTherExpenses" placeholder="Mother's Expenses">
+
+            
+            <button onclick="nextStep(3)">Next</button>
+        </div>
+        <div id="step4" class="hidden">
+            <label for="child1Expenses">Enter Child 1’s Expenses:</label>
+            <input type="number" id="child1Expenses" placeholder="Child 1's Expenses">
+            <button onclick="nextStep(4)">Next</button>
+        </div>
+        <div id="step5" class="hidden">
+            <label for="child2Expenses">Enter Child 2’s Expenses:</label>
+            <input type="number" id="child2Expenses" placeholder="Child 2's Expenses">
+            <button onclick="nextStep(5)">Next</button>
+        </div>
+        <div id="step6" class="hidden">
+            <label for="child3Expenses">Enter Child 3’s Expenses:</label>
+            <input type="number" id="child3Expenses" placeholder="Child 3's Expenses">
+            <button onclick="Showchart()">Show Expenses Chart</button>
+        </div>
+
+        <canvas id="expenseChart" class="hidden" width="400" height="400"></canvas>
+    </div>
+    <script src="familyexpensives.js"></script>
+</body>
+</html>

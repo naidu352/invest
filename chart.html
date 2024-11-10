@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Tracker with Reports</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(120deg, #f6d365, #fda085);
+            color: #2c3e50;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+        .container {
+            background-color: #fda085;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+            margin-top: 10%;
+        }
+        .container p {
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+        .container input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .container button {
+            background-color: #e67e22;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+        .container button:hover {
+            background-color: #d35400;
+        }
+        #chartContainer {
+            display: none;
+            max-width: 500px;
+            width: 100%;
+        }
+        #expensesList {
+            margin-top: 20px;
+            text-align: left;
+        }
+        #expensesList p {
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        #remainingBalance {
+            font-weight: bold;
+            margin-top: 20px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container" id="inputContainer">
+        <p>Enter your salary:</p>
+        <input type="number" id="salary" placeholder="Enter your salary"><br>
+
+        <p>Food expenses:</p>
+        <input type="number" id="food" placeholder="Enter your food expenses"><br>
+
+        <p>Travelling expenses:</p>
+        <input type="number" id="travelling" placeholder="Enter your travelling expenses"><br>
+
+        <p>Entertainment and Social Activities:</p>
+        <input type="number" id="entertainment" placeholder="Enter your entertainment expenses"><br>
+
+        <p>Rent/housing:</p>
+        <input type="number" id="rent" placeholder="Enter your rent or housing costs"><br>
+
+        <p>Basic needs (Electricity, Water, Gas, Internet):</p>
+        <input type="number" id="utilities" placeholder="Enter your utility costs"><br>
+
+        <p>Health and Fitness:</p>
+        <input type="number" id="health" placeholder="Enter health and fitness expenses"><br>
+
+        <p>Miscellaneous (Personal Care, Laundry):</p>
+        <input type="number" id="miscellaneous" placeholder="Enter miscellaneous expenses"><br>
+
+        <button onclick="generateChart()">Submit</button>
+    </div>
+
+    <!-- Chart Container -->
+    <div id="chartContainer">
+        <canvas id="expenseChart"></canvas>
+        <div id="expensesList"></div>
+        <p id="remainingBalance"></p>
+    </div>
+
+    <!-- Chart.js Library -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        // Function to generate the chart and store data in localStorage
+        function generateChart() {
+            const salary = parseFloat(document.getElementById('salary').value);
+            const food = parseFloat(document.getElementById('food').value);
+            const travelling = parseFloat(document.getElementById('travelling').value);
+            const entertainment = parseFloat(document.getElementById('entertainment').value);
+            const rent = parseFloat(document.getElementById('rent').value);
+            const utilities = parseFloat(document.getElementById('utilities').value);
+            const health = parseFloat(document.getElementById('health').value);
+            const miscellaneous = parseFloat(document.getElementById('miscellaneous').value);
+
+            const totalExpenses = food + travelling + entertainment + rent + utilities + health + miscellaneous;
+            const remainingBalance = salary - totalExpenses;
+
+            const data = [food, travelling, entertainment, rent, utilities, health, miscellaneous];
+            const labels = ['Food', 'Travelling', 'Entertainment', 'Rent', 'Utilities', 'Health & Fitness', 'Miscellaneous'];
+
+            // Store data in localStorage
+            storeChartData(salary, data, labels, remainingBalance);
+
+            // Show the chart container
+            document.getElementById('inputContainer').style.display = 'none';
+            document.getElementById('chartContainer').style.display = 'block';
+
+            // Generate the pie chart
+            const ctx = document.getElementById('expenseChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Expenses',
+                        data: data,
+                        backgroundColor: ['#3498db', '#e74c3c', '#f1c40f', '#2ecc71', '#9b59b6', '#34495e', '#e67e22']
+                    }]
+                }
+            });
+
+            // Display the expenses list and remaining balance
+            const expensesList = document.getElementById('expensesList');
+            expensesList.innerHTML = `
+                <p><strong>Food:</strong> $${food}</p>
+                <p><strong>Travelling:</strong> $${travelling}</p>
+                <p><strong>Entertainment:</strong> $${entertainment}</p>
+                <p><strong>Rent:</strong> $${rent}</p>
+                <p><strong>Utilities:</strong> $${utilities}</p>
+                <p><strong>Health & Fitness:</strong> $${health}</p>
+                <p><strong>Miscellaneous:</strong> $${miscellaneous}</p>
+            `;
+
+            const remainingBalanceElem = document.getElementById('remainingBalance');
+            remainingBalanceElem.innerHTML = `Remaining Balance: <span style="color: ${remainingBalance >= 0 ? 'green' : 'red'};">$${remainingBalance.toFixed(2)}</span>`;
+        }
+
+        // Function to store chart data in localStorage
+        function storeChartData(salary, data, labels, remainingBalance) {
+            const chartData = {
+                salary: salary,
+                data: data,
+                labels: labels,
+                remainingBalance: remainingBalance,
+                date: new Date().toLocaleString()
+            };
+            let savedCharts = JSON.parse(localStorage.getItem('savedCharts')) || [];
+            savedCharts.push(chartData);
+            localStorage.setItem('savedCharts', JSON.stringify(savedCharts));
+        }
+    </script>
+
+</body>
+</html>

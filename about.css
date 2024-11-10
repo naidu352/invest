@@ -1,0 +1,116 @@
+/* Global Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(180deg, #f6d365, #fda085); /* Gradient for a warm feel */
+    color: #101820; /* Dark text for contrast */
+}
+
+/* Header */
+header {
+    background-color: #344955; /* Dark background for contrast */
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    align-items: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 24px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin: 0 15px;
+}
+
+nav a:hover {
+    color: #f39c12; /* Highlight color */
+}
+
+/* Hero Section */
+.hero {
+    background-color: #344955; /* Dark background color matching feature boxes */
+    color: white; /* White text for visibility */
+    text-align: center;
+    padding: 60px 20px;
+}
+
+.hero h2 {
+    font-size: 60px;
+    padding: 15px 15px;
+    color: #FFD93D; /* Bright yellow for headings */
+    margin-top: 2px;
+}
+
+.hero p {
+    font-size: 25px;
+    color: white; /* White text for visibility */
+}
+
+/* Features Section */
+.features {
+    background: #58A4B0; /* Soft muted teal for depth */
+    padding: 60px 20px;
+    text-align: center;
+}
+
+.features a {
+    color: #FFD93D; /* Consistent link color */
+    text-decoration: none;
+}
+
+.feature-box {
+    display: inline-block;
+    width: 30%;
+    padding: 20px;
+    margin: 20px;
+    background-color: #344955; /* Dark background color */
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+    color: white; /* White text */
+}
+
+.feature-box:hover {
+    transform: translateY(-10px);
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+}
+
+.feature-box img {
+    width: 50px;
+    margin-bottom: 10px;
+}
+
+/* Footer */
+footer {
+    background-color: #344955; /* Dark background color */
+    color: white;
+    text-align: center;
+    padding: 20px;
+    position: relative;
+}
+
+/* CTA Button */
+.div {
+    padding: 40px 600px;
+}
+
+.div a {
+    background-color: #e67e22; /* Button color */
+    color: white;
+    padding: 15px 30px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    margin-top: 20px;
+    transition: background-color 0.3s;
+}
+
+.div a:hover {
+    background-color: #f39c12; /* Highlight color on hover */
+}

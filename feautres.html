@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TrackMyFunds</title>
+    <link rel="stylesheet" href="about.css">  
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <h1>TrackMyFunds</h1>
+        </div>
+        <nav>
+            <a href="about.html">Home</a>
+            <a href="features.html">Features</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+    </header>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <h3>Key Features</h3>
+        <div class="feature-box">
+            <a href="investment.html"><h4>Investment</h4></a>
+            <p>We will assist you on where you should invest.</p>
+        </div>
+        <div class="feature-box">
+            <a href="chart.html"><h4>Expense Categorization</h4></a>
+            <p>Organize your spending into categories.</p>
+        </div>
+        <div class="feature-box">
+            <a href="reports.html"><h4>Reports & Insights</h4></a>
+            <p>Track trends and improve your financial habits.</p>
+        </div>
+        <div class="feature-box">
+            <a href="familyexpensives.html"><h4>Family Expenses</h4></a>
+            <p>Calculate your family expenses.</p>
+        </div>
+        <div class="feature-box">
+            <a href="general_expensives.html"><h4>General Expenses</h4></a>
+            <p>General expenses across different categories.</p>
+        </div>
+    </section>
+
+    <!-- Reports Section -->
+    <section id="reportContainer" style="display: none;">
+        <h3>Saved Reports</h3>
+        <div id="reportsList"></div>
+        <button onclick="backToInput()">Back to Input</button>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 TrackMyFunds | Privacy Policy | Terms of Service</p>
+    </footer>
+
+    <script>
+        // Function to store chart data in localStorage
+        function storeChartData(salary, data, labels, remainingBalance) {
+            const chartData = {
+                salary: salary,
+                data: data,
+                labels: labels,
+                remainingBalance: remainingBalance,
+                date: new Date().toLocaleString()
+            };
+            
+            let savedCharts = JSON.parse(localStorage.getItem('savedCharts')) || [];
+            savedCharts.push(chartData);
+            localStorage.setItem('savedCharts', JSON.stringify(savedCharts));
+        }
+
+        // Function to view saved reports
+        function viewReports() {
+            const reportsContainer = document.getElementById('reportContainer');
+            const reportsList = document.getElementById('reportsList');
+            const savedCharts = JSON.parse(localStorage.getItem('savedCharts')) || [];
+
+            if (savedCharts.length === 0) {
+                reportsList.innerHTML = '<p>No saved reports available.</p>';
+            } else {
+                reportsList.innerHTML = savedCharts.map(chart => `
+                    <div style="margin-bottom: 20px;">
+                        <p><strong>Date:</strong> ${chart.date}</p>
+                        <p><strong>Salary:</strong> $${chart.salary}</p>
+                        <p><strong>Remaining Balance:</strong> $${chart.remainingBalance.toFixed(2)}</p>
+                        <p><strong>Expenses:</strong></p>
+                        <ul>
+                            ${chart.labels.map((label, index) => `<li>${label}: $${chart.data[index].toFixed(2)}</li>`).join('')}
+                        </ul>
+                    </div>
+                `).join('');
+            }
+            document.getElementById('features').style.display = 'none';
+            reportsContainer.style.display = 'block';
+        }
+
+        function backToInput() {
+            document.getElementById('features').style.display = 'block';
+            document.getElementById('reportContainer').style.display = 'none';
+        }
+
+        const transactions = [];
+        
+        function addTransaction(type, amount) {
+            transactions.push({ type, amount: parseFloat(amount) });
+            updateDashboard();
+        }
+
+        function calculateTotals() {
+            let income = 0;
+            let expenses = 0;
+            
+            transactions.forEach(transaction => {
+                if (transaction.type === 'income') {
+                    income += transaction.amount;
+                } else {
+                    expenses += transaction.amount;
+                }
+            });
+            return { income, expenses, balance: income - expenses };
+        }
+
+        function updateDashboard() {
+            const totals = calculateTotals();
+            console.log(`Income: $${totals.income.toFixed(2)}, Expenses: $${totals.expenses.toFixed(2)}, Balance: $${totals.balance.toFixed(2)}`);
+        }
+
+        function handleSubmit(event) {
+            event.preventDefault();
+            const type = document.getElementById('transactionType').value.toLowerCase();
+            const amount = parseFloat(document.getElementById('transactionAmount').value);
+
+            if (!isNaN(amount) && (type === 'income' || type === 'expense')) {
+                addTransaction(type, amount);
+                storeChartData(5000, [amount], [type], 5000 - amount);
+                alert('Transaction added successfully!');
+            } else {
+                alert('Please enter a valid transaction type (Income or Expense) and amount.');
+            }
+            
+            document.getElementById('transactionType').value = '';
+            document.getElementById('transactionAmount').value = '';
+        }
+
+        function showExpenseCategorization() {
+            alert('This feature is coming soon!');
+            viewReports();
+        }
+    </script>
+</body>
+</html>

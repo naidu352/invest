@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Reports</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(120deg, #f6d365, #fda085); /* Gradient background */
+            color: #2c3e50; /* Dark text color for contrast */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+            overflow-y: auto; /* Allows for scrolling if needed */
+        }
+        .container {
+            background-color: #fda085; /* White container for better contrast */
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            max-width: 600px;
+            width: 100%;
+            text-align: left;
+            animation: fadeIn 0.5s;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #e67e22; /* Updated heading color */
+        }
+        .report {
+            margin-bottom: 20px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 15px;
+            background-color: #f6d365; /* Light background for reports */
+            transition: transform 0.2s; /* Animation on hover */
+        }
+        .report:hover {
+            transform: scale(1.02); /* Slightly scale up on hover */
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
+        .report p {
+            margin-bottom: 10px;
+        }
+        button {
+            display: block;
+            margin: 20px auto;
+            background-color: #e67e22;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s, transform 0.2s; /* Smooth transition effects */
+        }
+        button:hover {
+            background-color: #d35400;
+            transform: scale(1.05); /* Scale up on hover */
+        }
+        button:focus {
+            outline: none; /* Remove focus outline */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Saved Reports</h2>
+        <div id="reportsList"></div>
+        <button onclick="backToInput()">Back to Input</button>
+    </div>
+
+    <script>
+        // Function to display saved reports
+        function displayReports() {
+            const reportsList = document.getElementById('reportsList');
+            const savedCharts = JSON.parse(localStorage.getItem('savedCharts')) || [];
+            
+            if (savedCharts.length === 0) {
+                reportsList.innerHTML = '<p>No saved reports available.</p>';
+            } else {
+                reportsList.innerHTML = savedCharts.map((chart, index) => `
+                    <div class="report">
+                        <p><strong>Date:</strong> ${chart.date}</p>
+                        <p><strong>Salary:</strong> $${chart.salary}</p>
+                        <p><strong>Remaining Balance:</strong> $${chart.remainingBalance}</p>
+                        <p><strong>Expenses:</strong></p>
+                        <ul>
+                            ${chart.labels.map((label, idx) => `
+                                <li>${label}: $${chart.data[idx]}</li>
+                            `).join('')}
+                        </ul>
+                    </div>
+                `).join('');
+            }
+        }
+
+        // Function to go back to the input view
+        function backToInput() {
+            window.location.href = 'about.html'; // Change 'about.html' to your main input page file name
+        }
+
+        // Call the function to display reports when the page loads
+        window.onload = displayReports;
+    </script>
+
+</body>
+</html>
